@@ -1689,20 +1689,17 @@ void applicationLoop() {
 				movHel += 0.1;
 				rotHelHelY += 0.5;
 				rotHelHelX2 += 0.8;
-				if (numberAdvanceHel == 0) {
+				if (numberAdvanceHel == 0)
 					modelMatrixHeli = glm::translate(modelMatrixHeli, glm::vec3(0.0, -0.03, 0.0));
-					if (movHel > maxAdvanceHel) {
-						numberAdvanceHel++;
-						movHel = 0.0f;
-					}
-				}
-				if (numberAdvanceHel == 1) {
+				
+				if (numberAdvanceHel == 1) 
 					modelMatrixHeli = glm::translate(modelMatrixHeli, glm::vec3(0.0, -0.008, 0.0));
-					if (movHel > maxAdvanceHel) {
-						numberAdvanceHel++;
-						movHel = 0.0f;
-					}
+				
+				if (movHel > maxAdvanceHel) {
+					numberAdvanceHel++;
+					movHel = 0.0f;
 				}
+
 				stateHel = 0;
 			}
 			else {
