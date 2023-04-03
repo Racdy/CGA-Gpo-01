@@ -85,7 +85,7 @@ Model mayowModelAnimate;
 Model modelMelAnimate;
 
 // Terrain model instance
-Terrain terrain(-1, -1, 50, 5, "../Textures/heightmap-1.png"); //(Estiramiento máximo en coordenadas OpenGL, Ponderación: Prolongación del terreno)
+Terrain terrain(-1, -1, 50, 10, "../Textures/heightmap3.png"); //(Estiramiento máximo en coordenadas OpenGL, Ponderación: Prolongación del terreno)
 
 GLuint textureCespedID, textureWallID, textureWindowID, textureHighwayID, textureLandingPadID;
 GLuint skyboxTextureID;
@@ -916,8 +916,22 @@ void applicationLoop() {
 		mayowModelAnimate.render(modelMatrixMayowBody);
 
 		//Ejercicio 01
+
+		modelMatrixMel[3][1] = terrain.getHeightTerrain(modelMatrixMel[3][0], modelMatrixMel[3][2]);//[3]: Ubicación de la traslación en la matriz. [0] Posición en X. [2]Pocisión en Y.
+		glm::vec3 upM = glm::normalize(terrain.getNormalTerrain(modelMatrixMel[3][0], modelMatrixMel[3][2]));
+		glm::vec3 frontM = glm::normalize(glm::vec3(modelMatrixMel[2]));
+		glm::vec3 rightM = glm::normalize(glm::cross(upM, frontM));
+		frontM = glm::normalize(glm::cross(rightM, upM));
+		modelMatrixMel[0] = glm::vec4(rightM, 0.0);
+		modelMatrixMel[1] = glm::vec4(upM, 0.0);
+		modelMatrixMel[2] = glm::vec4(frontM, 0.0);
+
+		glm::mat4 modelMatrixMelBody = glm::mat4(modelMatrixMel);
+		modelMatrixMel = glm::scale(modelMatrixMel, glm::vec3(0.005, 0.005, 0.005));
+		
 		modelMelAnimate.render(modelMatrixMel);
 		modelMelAnimate.setAnimationIndex(1);
+		
 
 		/*******************************************
 		 * Skybox
