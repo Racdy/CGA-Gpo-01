@@ -148,9 +148,11 @@ glm::mat4 modelMatrixSpaceShip = glm::mat4(1.0f);
 
 
 float rotDartHead = 0.0, rotDartLeftArm = 0.0, rotDartLeftHand = 0.0, rotDartRightArm = 0.0, rotDartRightHand = 0.0, rotDartLeftLeg = 0.0, rotDartRightLeg = 0.0;
-float rotBuzzHead = 0.0, rotBuzzHip = 0.0, rotBuzzTorso = 0.0,
-rotBuzzLeftArm = 0.0, rotBuzzLeftCalf = 0.0, rotBuzzLeftFoot = 0.0, rotBuzzLeftForeArm = 0.0, rotBuzzLeftHand = 0.0, rotBuzzLeftThigh = 0.0, rotBuzzLeftWing1 = 0.0, rotBuzzLeftWing2 = 0.0,
-rotBuzzRightArm = 0.0, rotBuzzRightCalf = 0.0, rotBuzzRightFoot = 0.0, rotBuzzRightForeArm = 0.0, rotBuzzRightHand = 0.0, rotBuzzRightThigh = 0.0, rotBuzzRightWing1 = 0.0, rotBuzzRightWing2 = 0.0;
+float rotBuzzHead = 0.0, rotBuzzHip = 0.0, rotBuzzTorso = 0.0, rotBuzzLeftArm = 0.0, rotBuzzLeftCalf = 0.0, 
+rotBuzzLeftFoot = 0.0, rotBuzzLeftForeArm = 0.0, rotBuzzLeftHand = 0.0, rotBuzzLeftThigh = 0.0, rotBuzzLeftWing1 = 0.0, 
+rotBuzzLeftWing2 = 0.0, rotBuzzRightArm = 0.0, rotBuzzRightCalf = 0.0, rotBuzzRightFoot = 0.0, 
+rotBuzzRightForeArm = 0.0, rotBuzzRightHand = 0.0, rotBuzzRightThigh = 0.0, rotBuzzRightWing1 = 0.0, 
+rotBuzzRightWing2 = 0.0;
 
 int modelSelected = 0;
 bool enableCountSelected = true;
