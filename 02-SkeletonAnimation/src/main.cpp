@@ -90,6 +90,9 @@ Model modelKnightAnimate;
 //Cyborg
 Model modelCyborgAnimate;
 
+//Modelo de practica 02
+Model modelMelAnimate;
+
 GLuint textureCespedID, textureWallID, textureWindowID, textureHighwayID, textureLandingPadID;
 GLuint skyboxTextureID;
 
@@ -101,12 +104,12 @@ GL_TEXTURE_CUBE_MAP_NEGATIVE_Y,
 GL_TEXTURE_CUBE_MAP_POSITIVE_Z,
 GL_TEXTURE_CUBE_MAP_NEGATIVE_Z };
 
-std::string fileNames[6] = { "../Textures/mp_bloodvalley/blood-valley_ft.tga",
-		"../Textures/mp_bloodvalley/blood-valley_bk.tga",
-		"../Textures/mp_bloodvalley/blood-valley_up.tga",
-		"../Textures/mp_bloodvalley/blood-valley_dn.tga",
-		"../Textures/mp_bloodvalley/blood-valley_rt.tga",
-		"../Textures/mp_bloodvalley/blood-valley_lf.tga" };
+std::string fileNames[6] = { "../Textures/night-skyboxes/Powerlines/ft.jpg",
+		"../Textures/night-skyboxes/Powerlines/bk.jpg",
+		"../Textures/night-skyboxes/Powerlines/up-1.jpg",
+		"../Textures/night-skyboxes/Powerlines/dn.jpg",
+		"../Textures/night-skyboxes/Powerlines/lf.jpg",
+		"../Textures/night-skyboxes/Powerlines/rt.jpg" };
 
 bool exitApp = false;
 int lastMousePosX, offsetX = 0;
@@ -123,6 +126,10 @@ glm::mat4 modelMatrixMayow = glm::mat4(1.0f);
 glm::mat4 modelMatrixCowboy = glm::mat4(1.0f); //xd
 glm::mat4 modelMatrixKnight = glm::mat4(1.0f);
 glm::mat4 modelMatrixCyborg = glm::mat4(1.0f);
+
+//Matrix de modelo de practica 02
+glm::mat4 modelMatrixMel = glm::mat4(1.0f);
+
 
 float rotDartHead = 0.0, rotDartLeftArm = 0.0, rotDartLeftHand = 0.0, rotDartRightArm = 0.0, rotDartRightHand = 0.0, rotDartLeftLeg = 0.0, rotDartRightLeg = 0.0;
 int modelSelected = 0;
@@ -310,6 +317,10 @@ void init(int width, int height, std::string strTitle, bool bFullScreen) {
 	//Cyborg
 	modelCyborgAnimate.loadModel("../models/cyborg/Cyborg-2023-2-1.fbx");
 	modelCyborgAnimate.setShader(&shaderMulLighting);
+
+	//Modelo de practica 02
+	modelMelAnimate.loadModel("../models/Mel_OBJ/MelanieANIMF.fbx");
+	modelMelAnimate.setShader(&shaderMulLighting);
 
 	camera->setPosition(glm::vec3(0.0, 3.0, 4.0));
 
@@ -552,6 +563,9 @@ void destroy() {
 	// Custom objects animate
 	mayowModelAnimate.destroy();
 
+	//Destroy de modelo de practica 02
+	modelMelAnimate.destroy();
+
 	// Textures Delete
 	glBindTexture(GL_TEXTURE_2D, 0);
 	glDeleteTextures(1, &textureCespedID);
@@ -628,7 +642,7 @@ bool processInput(bool continueApplication) {
 	if (enableCountSelected && glfwGetKey(window, GLFW_KEY_TAB) == GLFW_PRESS){
 		enableCountSelected = false;
 		modelSelected++;
-		if(modelSelected > 2)
+		if(modelSelected > 3)
 			modelSelected = 0;
 		if(modelSelected == 1)
 			fileName = "../animaciones/animation_dart_joints.txt";
@@ -717,9 +731,13 @@ bool processInput(bool continueApplication) {
 	if (modelSelected == 0 && glfwGetKey(window, GLFW_KEY_UP) == GLFW_PRESS) {
 		modelMatrixMayow = glm::translate(modelMatrixMayow, glm::vec3(0.0, 0.0, 0.02));
 		mayowModelAnimate.setAnimationIndex(0);
-
 	}
 
+	if (modelSelected == 3 && glfwGetKey(window, GLFW_KEY_UP) == GLFW_PRESS) {
+		modelMatrixMel = glm::translate(modelMatrixMel, glm::vec3(0.0, 0.0, 15.0));
+		modelMelAnimate.setAnimationIndex(2);
+	}
+	   
 	glfwPollEvents();
 	return continueApplication;
 }
@@ -759,6 +777,11 @@ void applicationLoop() {
 
 	modelMatrixCyborg = glm::translate(modelMatrixCyborg, glm::vec3(15.0f, 0.05f, -10.0f));
 	modelMatrixCyborg = glm::scale(modelMatrixCyborg, glm::vec3(0.01f));
+
+	//Ejercicio 6 Melanie
+	modelMatrixMel = glm::translate(modelMatrixMel, glm::vec3(0.0f, 0.0f, -20.0f));
+	modelMatrixMel = glm::scale(modelMatrixMel, glm::vec3(0.005f));
+	//modelMatrixMel = glm::rotate(modelMatrixMel, glm::radians(-90.0f), glm::vec3(1, 0, 0));
 
 	// Variables to interpolation key frames
 	fileName = "../animaciones/animation_dart_joints.txt";
@@ -1042,6 +1065,12 @@ void applicationLoop() {
 		modelKnightAnimate.render(modelMatrixKnight);
 		modelCyborgAnimate.render(modelMatrixCyborg);
 		//modelCyborgAnimate.setAnimationIndex(2);
+
+		//Render de modelo de practica 02
+		//glm::mat4 modelMatrixMelBody = glm::mat4(modelMatrixMel);
+		//modelMatrixMelBody = glm::scale(modelMatrixMelBody, glm::vec3(0.1, 0.1, 0.1));
+		modelMelAnimate.render(modelMatrixMel);
+		modelMelAnimate.setAnimationIndex(1);
 
 		/*******************************************
 		 * Skybox

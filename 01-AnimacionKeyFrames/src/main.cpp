@@ -48,6 +48,8 @@ Shader shaderSkybox;
 //Shader con multiples luces
 Shader shaderMulLighting;
 
+Shader shaderMulLightingVariasTextures; //Practica 04
+
 std::shared_ptr<FirstPersonCamera> camera(new FirstPersonCamera());
 
 Sphere skyboxSphere(20, 20);
@@ -56,6 +58,7 @@ Box boxCesped;
 Box boxWalls;
 Box boxHighway;
 Box boxLandingPad;
+Box boxVariasTextures; //Practica 04
 // Models complex instances
 Model modelRock;
 Model modelAircraft;
@@ -267,6 +270,7 @@ void init(int width, int height, std::string strTitle, bool bFullScreen) {
 	shader.initialize("../Shaders/colorShader.vs", "../Shaders/colorShader.fs");
 	shaderSkybox.initialize("../Shaders/skyBox.vs", "../Shaders/skyBox.fs");
 	shaderMulLighting.initialize("../Shaders/iluminacion_texture_res.vs", "../Shaders/multipleLights.fs");
+	shaderMulLightingVariasTextures.initialize("../Shaders/iluminacion_texture_res.vs", "../Shaders/multipleLightingVariasTextures.fs"); //Practica04
 
 	// Inicializacion de los objetos.
 	skyboxSphere.init();
@@ -293,6 +297,9 @@ void init(int width, int height, std::string strTitle, bool bFullScreen) {
 
 	modelAircraft.loadModel("../models/Aircraft_obj/E 45 Aircraft_obj.obj");
 	modelAircraft.setShader(&shaderMulLighting);
+
+	boxVariasTextures.init();
+	boxVariasTextures.setShader(&shaderMulLightingVariasTextures); //Practica 04
 
 	// Eclipse
 	modelEclipseChasis.loadModel("../models/Eclipse/2003eclipse_chasis.obj");
@@ -587,6 +594,7 @@ void destroy() {
 	shader.destroy();
 	shaderMulLighting.destroy();
 	shaderSkybox.destroy();
+	shaderMulLightingVariasTextures.destroy(); // Practica 04 
 
 	// Basic objects Delete
 	skyboxSphere.destroy();
@@ -595,6 +603,7 @@ void destroy() {
 	boxHighway.destroy();
 	boxLandingPad.destroy();
 	esferaPrueba1.destroy(); //Destruye el objeto
+	boxVariasTextures.destroy(); //Practica 04
 
 	// Custom objects Delete
 	modelAircraft.destroy();
@@ -1018,6 +1027,12 @@ void applicationLoop() {
 		shaderMulLighting.setMatrix4("view", 1, false,
 				glm::value_ptr(view));
 
+		//Practic 04 -  Settea la matriz de vista y projection al shader con varias texturas
+		shaderMulLightingVariasTextures.setMatrix4("projection", 1, false,
+			glm::value_ptr(projection));
+		shaderMulLightingVariasTextures.setMatrix4("view", 1, false,
+			glm::value_ptr(view));
+
 		/*******************************************
 		 * Propiedades Luz direccional
 		 *******************************************/
@@ -1026,16 +1041,24 @@ void applicationLoop() {
 		shaderMulLighting.setVectorFloat3("directionalLight.light.diffuse", glm::value_ptr(glm::vec3(0.7, 0.7, 0.7)));
 		shaderMulLighting.setVectorFloat3("directionalLight.light.specular", glm::value_ptr(glm::vec3(0.9, 0.9, 0.9)));
 		shaderMulLighting.setVectorFloat3("directionalLight.direction", glm::value_ptr(glm::vec3(-1.0, 0.0, 0.0)));
+				// Practica 04
+		shaderMulLightingVariasTextures.setVectorFloat3("viewPos", glm::value_ptr(camera->getPosition()));
+		shaderMulLightingVariasTextures.setVectorFloat3("directionalLight.light.ambient", glm::value_ptr(glm::vec3(0.3, 0.3, 0.3)));
+		shaderMulLightingVariasTextures.setVectorFloat3("directionalLight.light.diffuse", glm::value_ptr(glm::vec3(0.7, 0.7, 0.7)));
+		shaderMulLightingVariasTextures.setVectorFloat3("directionalLight.light.specular", glm::value_ptr(glm::vec3(0.9, 0.9, 0.9)));
+		shaderMulLightingVariasTextures.setVectorFloat3("directionalLight.direction", glm::value_ptr(glm::vec3(-1.0, 0.0, 0.0)));
 
 		/*******************************************
 		 * Propiedades SpotLights
 		 *******************************************/
 		shaderMulLighting.setInt("spotLightCount", 0);
+		shaderMulLightingVariasTextures.setInt("spotLightCount", 0);
 
 		/*******************************************
 		 * Propiedades PointLights
 		 *******************************************/
 		shaderMulLighting.setInt("pointLightCount", 0);
+		shaderMulLightingVariasTextures.setInt("pointLightCount", 0);
 
 		/*******************************************
 		 * Cesped
@@ -1160,6 +1183,16 @@ void applicationLoop() {
 		/*******************************************
 		 * Custom objects obj
 		 *******************************************/
+		//Practica 04 - Render Cubo
+		boxVariasTextures.setPosition(glm::vec3(10.0,3.0,10.0));
+		glActiveTexture(GL_TEXTURE3);
+		glBindTexture(GL_TEXTURE_2D, textureWallID);
+		shaderMulLightingVariasTextures.setInt("texture2", 3);
+		glActiveTexture(GL_TEXTURE0);
+		glBindTexture(GL_TEXTURE_2D, textureWindowID);
+		shaderMulLightingVariasTextures.setInt("texture1", 0);
+		boxVariasTextures.render();
+
 		//Rock render
 		modelRock.render(matrixModelRock);
 		// Forze to enable the unit texture to 0 always ----------------- IMPORTANT
@@ -1636,6 +1669,7 @@ void applicationLoop() {
 				rotWheelsLamboY = 0.0f;
 			if (advanceCountLambo > maxAdvanceLambo) {
 				advanceCountLambo = 0.0;
+				numberAdvanceLambo++;
 				stateLambo = 2;
 			}
 			break;
@@ -1654,7 +1688,6 @@ void applicationLoop() {
 			if (rotCountLambo > 90.0f) {
 				rotCountLambo = 0.0f;
 				stateLambo = 0;
-				numberAdvanceLambo++;
 				if (numberAdvanceLambo > 3) {
 					numberAdvanceLambo = 1;
 					stateLambo = 3;
