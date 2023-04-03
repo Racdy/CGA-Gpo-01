@@ -85,7 +85,7 @@ Model mayowModelAnimate;
 Model modelMelAnimate;
 
 // Terrain model instance
-Terrain terrain(-1, -1, 50, 5, "../Textures/heightmap-1.png"); //(Estiramiento máximo en coordenadas OpenGL, Ponderación: Prolongación del terreno)
+Terrain terrain(-1, -1, 400, 1000, "../Textures/heightmap3.png"); //(Estiramiento máximo en coordenadas OpenGL, Ponderación: Prolongación del terreno)
 
 GLuint textureCespedID, textureWallID, textureWindowID, textureHighwayID, textureLandingPadID;
 GLuint skyboxTextureID;
@@ -582,13 +582,13 @@ bool processInput(bool continueApplication) {
 	}
 
 	if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
-		camera->moveFrontCamera(true, deltaTime);
+		camera->moveFrontCamera(true, deltaTime * 10);
 	if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS)
-		camera->moveFrontCamera(false, deltaTime);
+		camera->moveFrontCamera(false, deltaTime * 10);
 	if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS)
-		camera->moveRightCamera(false, deltaTime);
+		camera->moveRightCamera(false, deltaTime * 10);
 	if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
-		camera->moveRightCamera(true, deltaTime);
+		camera->moveRightCamera(true, deltaTime * 10);
 	if (glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_LEFT) == GLFW_PRESS)
 		camera->mouseMoveCamera(offsetX, offsetY, deltaTime);
 	offsetX = 0;
