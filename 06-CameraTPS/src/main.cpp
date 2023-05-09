@@ -961,7 +961,6 @@ void applicationLoop() {
 
 	//Ejercicio 01
 	modelMatrixMel = glm::translate(modelMatrixMel, glm::vec3(13.0f, 0.5f, -10.0f));
-	//modelMatrixMel = glm::scale(modelMatrixMel, glm::vec3(0.005f));
 	modelMatrixMel = glm::rotate(modelMatrixMel, glm::radians(-90.0f), glm::vec3(0, 1, 0));
 
 	// Variables to interpolation key frames
