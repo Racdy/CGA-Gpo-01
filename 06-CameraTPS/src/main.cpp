@@ -54,9 +54,13 @@ Shader shaderMulLighting;
 //Shader para el terreno
 Shader shaderTerrain;
 
+<<<<<<< Updated upstream
 //std::shared_ptr<FirstPersonCamera> camera(new FirstPersonCamera());
 std::shared_ptr<Camera> camera(new ThirdPersonCamera()); // PRACTICA 6
 
+=======
+std::shared_ptr<Camera> camera(new ThirdPersonCamera());
+>>>>>>> Stashed changes
 
 Sphere skyboxSphere(20, 20);
 
@@ -114,6 +118,11 @@ std::string fileNames[6] = { "../Textures/mp_bloodvalley/blood-valley_ft.tga",
 bool exitApp = false;
 int lastMousePosX, offsetX = 0;
 int lastMousePosY, offsetY = 0;
+//p06
+bool isJump = false;
+double startTimeJump = 0.0;
+double tmv = 0.0;
+float gravity = 1.3;
 
 // Model matrix definitions
 glm::mat4 matrixModelRock = glm::mat4(1.0);
@@ -122,6 +131,7 @@ glm::mat4 modelMatrixLambo = glm::mat4(1.0);
 glm::mat4 modelMatrixAircraft = glm::mat4(1.0);
 glm::mat4 modelMatrixDart = glm::mat4(1.0f);
 glm::mat4 modelMatrixMayow = glm::mat4(1.0f);
+
 
 float rotDartHead = 0.0, rotDartLeftArm = 0.0, rotDartLeftHand = 0.0, rotDartRightArm = 0.0, rotDartRightHand = 0.0, rotDartLeftLeg = 0.0, rotDartRightLeg = 0.0;
 int modelSelected = 2;
@@ -153,6 +163,7 @@ float rotHelHelY = 0.0;
 // Var animate lambo dor
 int stateDoor = 0;
 float dorRotCount = 0.0;
+float distanceFromTarget = 3.0f;
 
 //PRACTICA 05
 
@@ -217,7 +228,11 @@ void init(int width, int height, std::string strTitle, bool bFullScreen) {
 	glfwSetKeyCallback(window, keyCallback);
 	glfwSetCursorPosCallback(window, mouseCallback);
 	glfwSetMouseButtonCallback(window, mouseButtonCallback);
+<<<<<<< Updated upstream
 	glfwSetScrollCallback(window, scrollCallback); //PRACTICA 05
+=======
+	glfwSetScrollCallback(window, scrollCallback);
+>>>>>>> Stashed changes
 	glfwSetInputMode(window, GLFW_STICKY_KEYS, GL_TRUE);
 
 	// Init glew
@@ -308,8 +323,14 @@ void init(int width, int height, std::string strTitle, bool bFullScreen) {
 	mayowModelAnimate.loadModel("../models/mayow/personaje2.fbx");
 	mayowModelAnimate.setShader(&shaderMulLighting);
 
+<<<<<<< Updated upstream
 	//camera->setPosition(glm::vec3(0.0, 0.0, 10.0)); PRACTICA 05
 	camera->setSensitivity(1.0f);
+=======
+	//camera->setPosition(glm::vec3(0.0, 0.0, 10.0));
+	camera->setSensitivity(1.0f);
+	camera->setDistanceFromTarget(distanceFromTarget);
+>>>>>>> Stashed changes
 
 	// Definimos el tamanio de la imagen
 	int imageWidth, imageHeight;
@@ -725,11 +746,17 @@ void destroy() {
 	glDeleteTextures(1, &skyboxTextureID);
 }
 
+<<<<<<< Updated upstream
 //PRACTICA 05
 void scrollCallback(GLFWwindow* window, double xoffset, double yoffset) {
 	distanceFromTarget -= yoffset;
 	camera->setDistanceFromTarget(distanceFromTarget);
 
+=======
+void scrollCallback(GLFWwindow* window, double xoffset, double yoffset){
+	distanceFromTarget -= yoffset;
+	camera->setDistanceFromTarget(distanceFromTarget);
+>>>>>>> Stashed changes
 }
 
 void reshapeCallback(GLFWwindow *Window, int widthRes, int heightRes) {
@@ -778,6 +805,7 @@ bool processInput(bool continueApplication) {
 		return false;
 	}
 
+<<<<<<< Updated upstream
 	//if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
 	//	camera->moveFrontCamera(true, deltaTime);
 	//if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS)
@@ -792,6 +820,24 @@ bool processInput(bool continueApplication) {
 		camera->mouseMoveCamera(offsetX, 0, deltaTime);
 	if(glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_RIGHT) == GLFW_PRESS)
 		camera->mouseMoveCamera( 0, offsetY, deltaTime);
+=======
+	/*if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
+		camera->moveFrontCamera(true, deltaTime);
+	if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS)
+		camera->moveFrontCamera(false, deltaTime);
+	if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS)
+		camera->moveRightCamera(false, deltaTime);
+	if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
+		camera->moveRightCamera(true, deltaTime);
+	if (glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_LEFT) == GLFW_PRESS)
+		camera->mouseMoveCamera(offsetX, offsetY, deltaTime);*/
+	if (glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_LEFT) == GLFW_PRESS)
+		camera->mouseMoveCamera(offsetX, 0, deltaTime);
+	
+	if (glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_RIGHT) == GLFW_PRESS)
+		camera->mouseMoveCamera(0, offsetY, deltaTime);
+
+>>>>>>> Stashed changes
 	offsetX = 0;
 	offsetY = 0;
 
@@ -896,6 +942,15 @@ bool processInput(bool continueApplication) {
 		modelMatrixMayow = glm::translate(modelMatrixMayow, glm::vec3(0, 0, -0.02));
 	}
 
+	bool stateSpace = glfwGetKey(window, GLFW_KEY_SPACE) == GLFW_PRESS;
+	if (!isJump && stateSpace) {
+		isJump = true;
+		startTimeJump = currTime;
+		tmv = 0.0;
+		std::cout << "Jump" << std::endl;
+	}
+
+
 	glfwPollEvents();
 	return continueApplication;
 }
@@ -904,6 +959,11 @@ void applicationLoop() {
 	bool psi = true;
 	
 	//PRACTICA 05
+	glm::mat4 view;
+	glm::vec3 target;
+	glm::vec3 axisTarget;
+	float angleTarget;
+
 	glm::mat4 view;
 	glm::vec3 target;
 	glm::vec3 axisTarget;
@@ -931,7 +991,7 @@ void applicationLoop() {
 
 	while (psi) {
 		currTime = TimeManager::Instance().GetTime();
-		if(currTime - lastTime < 0.016666667){
+		if (currTime - lastTime < 0.016666667) {
 			glfwPollEvents();
 			continue;
 		}
@@ -944,6 +1004,29 @@ void applicationLoop() {
 		std::vector<float> matrixDartJoints;
 		std::vector<glm::mat4> matrixDart;
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+		if (modelSelected == 1) {
+			axisTarget = glm::axis(glm::quat_cast(modelMatrixDart));
+			angleTarget = glm::angle(glm::quat_cast(modelMatrixDart));
+			target = modelMatrixDart[3];
+		}
+		else {
+			axisTarget = glm::axis(glm::quat_cast(modelMatrixMayow));
+			angleTarget = glm::angle(glm::quat_cast(modelMatrixMayow));
+			target = modelMatrixMayow[3];
+		}
+
+		if (std::isnan(angleTarget))
+			angleTarget = 0.0;
+		if (axisTarget.y < 0)
+			angleTarget = -angleTarget;
+		if (modelSelected == 1)
+			angleTarget -= glm::radians(90.0);
+		camera->setAngleTarget(angleTarget);
+		camera->setCameraTarget(target);
+		camera->updateCamera();
+
+		view = camera->getViewMatrix();
 
 		glm::mat4 projection = glm::perspective(glm::radians(45.0f),
 				(float) screenWidth / (float) screenHeight, 0.01f, 100.0f);
@@ -1229,7 +1312,13 @@ void applicationLoop() {
 		/*******************************************
 		 * Custom Anim objects obj
 		 *******************************************/
-		modelMatrixMayow[3][1] = terrain.getHeightTerrain(modelMatrixMayow[3][0], modelMatrixMayow[3][2]);
+		//= -gravity * tmv *tmv * 3.0 * tmv +
+		modelMatrixMayow[3][1] = -gravity * tmv *tmv + 3.0 * tmv + terrain.getHeightTerrain(modelMatrixMayow[3][0], modelMatrixMayow[3][2]);
+		tmv = currTime - startTimeJump;
+		if(modelMatrixMayow[3][1] < terrain.getHeightTerrain(modelMatrixMayow[3][0], modelMatrixMayow[3][2])) {
+			isJump = false;
+			modelMatrixMayow[3][1] = terrain.getHeightTerrain(modelMatrixMayow[3][0], modelMatrixMayow[3][2]);
+		}
 		glm::mat4 modelMatrixMayowBody = glm::mat4(modelMatrixMayow);
 		modelMatrixMayowBody = glm::scale(modelMatrixMayowBody, glm::vec3(0.021, 0.021, 0.021));
 		mayowModelAnimate.render(modelMatrixMayowBody);
