@@ -122,7 +122,7 @@ std::string fileNames[6] = { "../Textures/mp_bloodvalley/blood-valley_ft.tga",
 bool exitApp = false;
 int lastMousePosX, offsetX = 0;
 int lastMousePosY, offsetY = 0;
- /////////////////////////// PRACTICA 07
+/////////////////////////// PRACTICA 07
 bool isJump = false;
 double startTimeJump = 0.0;
 double tmv = 0.0;
@@ -174,7 +174,7 @@ std::vector<glm::vec3> lamp1Position = { glm::vec3(-7.03, 0, -19.14), glm::vec3(
 std::vector<float> lamp1Orientation = { -17.0, -82.67, 23.70 };
 std::vector<glm::vec3> lamp2Position = { glm::vec3(-36.52, 0, -23.24),
 		glm::vec3(-52.73, 0, -3.90) };
-std::vector<float> lamp2Orientation = {21.37 + 90, -65.0 + 90};
+std::vector<float> lamp2Orientation = { 21.37 + 90, -65.0 + 90 };
 
 double deltaTime;
 double currTime, lastTime;
@@ -186,7 +186,7 @@ std::map<std::string, std::tuple<AbstractModel::SBB, glm::mat4, glm::mat4> > col
 // Se definen todos las funciones.
 void reshapeCallback(GLFWwindow *Window, int widthRes, int heightRes);
 void keyCallback(GLFWwindow *window, int key, int scancode, int action,
-		int mode);
+	int mode);
 void mouseCallback(GLFWwindow *window, double xpos, double ypos);
 void mouseButtonCallback(GLFWwindow *window, int button, int state, int mod);
 void scrollCallback(GLFWwindow* window, double xoffset, double yoffset);
@@ -211,15 +211,15 @@ void init(int width, int height, std::string strTitle, bool bFullScreen) {
 
 	if (bFullScreen)
 		window = glfwCreateWindow(width, height, strTitle.c_str(),
-				glfwGetPrimaryMonitor(), nullptr);
+			glfwGetPrimaryMonitor(), nullptr);
 	else
 		window = glfwCreateWindow(width, height, strTitle.c_str(), nullptr,
-				nullptr);
+			nullptr);
 
 	if (window == nullptr) {
 		std::cerr
-				<< "Error to create GLFW window, you can try download the last version of your video card that support OpenGL 3.3+"
-				<< std::endl;
+			<< "Error to create GLFW window, you can try download the last version of your video card that support OpenGL 3.3+"
+			<< std::endl;
 		destroy();
 		exit(-1);
 	}
@@ -360,11 +360,12 @@ void init(int width, int height, std::string strTitle, bool bFullScreen) {
 		skyboxTexture = Texture(fileNames[i]);
 		FIBITMAP *bitmap = skyboxTexture.loadImage(true);
 		unsigned char *data = skyboxTexture.convertToData(bitmap, imageWidth,
-				imageHeight);
+			imageHeight);
 		if (data) {
 			glTexImage2D(types[i], 0, GL_RGBA, imageWidth, imageHeight, 0,
-			GL_BGRA, GL_UNSIGNED_BYTE, data);
-		} else
+				GL_BGRA, GL_UNSIGNED_BYTE, data);
+		}
+		else
 			std::cout << "Failed to load texture" << std::endl;
 		skyboxTexture.freeImage(bitmap);
 	}
@@ -375,7 +376,7 @@ void init(int width, int height, std::string strTitle, bool bFullScreen) {
 	bitmap = textureCesped.loadImage();
 	// Convertimos el mapa de bits en un arreglo unidimensional de tipo unsigned char
 	data = textureCesped.convertToData(bitmap, imageWidth,
-			imageHeight);
+		imageHeight);
 	// Creando la textura con id 1
 	glGenTextures(1, &textureCespedID);
 	// Enlazar esa textura a una tipo de textura de 2D.
@@ -393,10 +394,11 @@ void init(int width, int height, std::string strTitle, bool bFullScreen) {
 		// Formato interno de la libreria de la imagen, el tipo de dato y al apuntador
 		// a los datos
 		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, imageWidth, imageHeight, 0,
-		GL_BGRA, GL_UNSIGNED_BYTE, data);
+			GL_BGRA, GL_UNSIGNED_BYTE, data);
 		// Generan los niveles del mipmap (OpenGL es el ecargado de realizarlos)
 		glGenerateMipmap(GL_TEXTURE_2D);
-	} else
+	}
+	else
 		std::cout << "Failed to load texture" << std::endl;
 	// Libera la memoria de la textura
 	textureCesped.freeImage(bitmap);
@@ -407,7 +409,7 @@ void init(int width, int height, std::string strTitle, bool bFullScreen) {
 	bitmap = textureWall.loadImage();
 	// Convertimos el mapa de bits en un arreglo unidimensional de tipo unsigned char
 	data = textureWall.convertToData(bitmap, imageWidth,
-			imageHeight);
+		imageHeight);
 	// Creando la textura con id 1
 	glGenTextures(1, &textureWallID);
 	// Enlazar esa textura a una tipo de textura de 2D.
@@ -425,10 +427,11 @@ void init(int width, int height, std::string strTitle, bool bFullScreen) {
 		// Formato interno de la libreria de la imagen, el tipo de dato y al apuntador
 		// a los datos
 		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, imageWidth, imageHeight, 0,
-		GL_BGRA, GL_UNSIGNED_BYTE, data);
+			GL_BGRA, GL_UNSIGNED_BYTE, data);
 		// Generan los niveles del mipmap (OpenGL es el ecargado de realizarlos)
 		glGenerateMipmap(GL_TEXTURE_2D);
-	} else
+	}
+	else
 		std::cout << "Failed to load texture" << std::endl;
 	// Libera la memoria de la textura
 	textureWall.freeImage(bitmap);
@@ -439,7 +442,7 @@ void init(int width, int height, std::string strTitle, bool bFullScreen) {
 	bitmap = textureWindow.loadImage();
 	// Convertimos el mapa de bits en un arreglo unidimensional de tipo unsigned char
 	data = textureWindow.convertToData(bitmap, imageWidth,
-			imageHeight);
+		imageHeight);
 	// Creando la textura con id 1
 	glGenTextures(1, &textureWindowID);
 	// Enlazar esa textura a una tipo de textura de 2D.
@@ -457,10 +460,11 @@ void init(int width, int height, std::string strTitle, bool bFullScreen) {
 		// Formato interno de la libreria de la imagen, el tipo de dato y al apuntador
 		// a los datos
 		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, imageWidth, imageHeight, 0,
-		GL_BGRA, GL_UNSIGNED_BYTE, data);
+			GL_BGRA, GL_UNSIGNED_BYTE, data);
 		// Generan los niveles del mipmap (OpenGL es el ecargado de realizarlos)
 		glGenerateMipmap(GL_TEXTURE_2D);
-	} else
+	}
+	else
 		std::cout << "Failed to load texture" << std::endl;
 	// Libera la memoria de la textura
 	textureWindow.freeImage(bitmap);
@@ -471,7 +475,7 @@ void init(int width, int height, std::string strTitle, bool bFullScreen) {
 	bitmap = textureHighway.loadImage();
 	// Convertimos el mapa de bits en un arreglo unidimensional de tipo unsigned char
 	data = textureHighway.convertToData(bitmap, imageWidth,
-			imageHeight);
+		imageHeight);
 	// Creando la textura con id 1
 	glGenTextures(1, &textureHighwayID);
 	// Enlazar esa textura a una tipo de textura de 2D.
@@ -489,10 +493,11 @@ void init(int width, int height, std::string strTitle, bool bFullScreen) {
 		// Formato interno de la libreria de la imagen, el tipo de dato y al apuntador
 		// a los datos
 		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, imageWidth, imageHeight, 0,
-		GL_BGRA, GL_UNSIGNED_BYTE, data);
+			GL_BGRA, GL_UNSIGNED_BYTE, data);
 		// Generan los niveles del mipmap (OpenGL es el ecargado de realizarlos)
 		glGenerateMipmap(GL_TEXTURE_2D);
-	} else
+	}
+	else
 		std::cout << "Failed to load texture" << std::endl;
 	// Libera la memoria de la textura
 	textureHighway.freeImage(bitmap);
@@ -503,7 +508,7 @@ void init(int width, int height, std::string strTitle, bool bFullScreen) {
 	bitmap = textureLandingPad.loadImage();
 	// Convertimos el mapa de bits en un arreglo unidimensional de tipo unsigned char
 	data = textureLandingPad.convertToData(bitmap, imageWidth,
-			imageHeight);
+		imageHeight);
 	// Creando la textura con id 1
 	glGenTextures(1, &textureLandingPadID);
 	// Enlazar esa textura a una tipo de textura de 2D.
@@ -521,10 +526,11 @@ void init(int width, int height, std::string strTitle, bool bFullScreen) {
 		// Formato interno de la libreria de la imagen, el tipo de dato y al apuntador
 		// a los datos
 		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, imageWidth, imageHeight, 0,
-		GL_BGRA, GL_UNSIGNED_BYTE, data);
+			GL_BGRA, GL_UNSIGNED_BYTE, data);
 		// Generan los niveles del mipmap (OpenGL es el ecargado de realizarlos)
 		glGenerateMipmap(GL_TEXTURE_2D);
-	} else
+	}
+	else
 		std::cout << "Failed to load texture" << std::endl;
 	// Libera la memoria de la textura
 	textureLandingPad.freeImage(bitmap);
@@ -535,7 +541,7 @@ void init(int width, int height, std::string strTitle, bool bFullScreen) {
 	bitmap = textureTerrainBackground.loadImage();
 	// Convertimos el mapa de bits en un arreglo unidimensional de tipo unsigned char
 	data = textureTerrainBackground.convertToData(bitmap, imageWidth,
-			imageHeight);
+		imageHeight);
 	// Creando la textura con id 1
 	glGenTextures(1, &textureTerrainBackgroundID);
 	// Enlazar esa textura a una tipo de textura de 2D.
@@ -553,10 +559,11 @@ void init(int width, int height, std::string strTitle, bool bFullScreen) {
 		// Formato interno de la libreria de la imagen, el tipo de dato y al apuntador
 		// a los datos
 		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, imageWidth, imageHeight, 0,
-		GL_BGRA, GL_UNSIGNED_BYTE, data);
+			GL_BGRA, GL_UNSIGNED_BYTE, data);
 		// Generan los niveles del mipmap (OpenGL es el ecargado de realizarlos)
 		glGenerateMipmap(GL_TEXTURE_2D);
-	} else
+	}
+	else
 		std::cout << "Failed to load texture" << std::endl;
 	// Libera la memoria de la textura
 	textureTerrainBackground.freeImage(bitmap);
@@ -567,7 +574,7 @@ void init(int width, int height, std::string strTitle, bool bFullScreen) {
 	bitmap = textureTerrainR.loadImage();
 	// Convertimos el mapa de bits en un arreglo unidimensional de tipo unsigned char
 	data = textureTerrainR.convertToData(bitmap, imageWidth,
-			imageHeight);
+		imageHeight);
 	// Creando la textura con id 1
 	glGenTextures(1, &textureTerrainRID);
 	// Enlazar esa textura a una tipo de textura de 2D.
@@ -585,10 +592,11 @@ void init(int width, int height, std::string strTitle, bool bFullScreen) {
 		// Formato interno de la libreria de la imagen, el tipo de dato y al apuntador
 		// a los datos
 		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, imageWidth, imageHeight, 0,
-		GL_BGRA, GL_UNSIGNED_BYTE, data);
+			GL_BGRA, GL_UNSIGNED_BYTE, data);
 		// Generan los niveles del mipmap (OpenGL es el ecargado de realizarlos)
 		glGenerateMipmap(GL_TEXTURE_2D);
-	} else
+	}
+	else
 		std::cout << "Failed to load texture" << std::endl;
 	// Libera la memoria de la textura
 	textureTerrainR.freeImage(bitmap);
@@ -599,7 +607,7 @@ void init(int width, int height, std::string strTitle, bool bFullScreen) {
 	bitmap = textureTerrainG.loadImage();
 	// Convertimos el mapa de bits en un arreglo unidimensional de tipo unsigned char
 	data = textureTerrainG.convertToData(bitmap, imageWidth,
-			imageHeight);
+		imageHeight);
 	// Creando la textura con id 1
 	glGenTextures(1, &textureTerrainGID);
 	// Enlazar esa textura a una tipo de textura de 2D.
@@ -617,10 +625,11 @@ void init(int width, int height, std::string strTitle, bool bFullScreen) {
 		// Formato interno de la libreria de la imagen, el tipo de dato y al apuntador
 		// a los datos
 		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, imageWidth, imageHeight, 0,
-		GL_BGRA, GL_UNSIGNED_BYTE, data);
+			GL_BGRA, GL_UNSIGNED_BYTE, data);
 		// Generan los niveles del mipmap (OpenGL es el ecargado de realizarlos)
 		glGenerateMipmap(GL_TEXTURE_2D);
-	} else
+	}
+	else
 		std::cout << "Failed to load texture" << std::endl;
 	// Libera la memoria de la textura
 	textureTerrainG.freeImage(bitmap);
@@ -631,7 +640,7 @@ void init(int width, int height, std::string strTitle, bool bFullScreen) {
 	bitmap = textureTerrainB.loadImage();
 	// Convertimos el mapa de bits en un arreglo unidimensional de tipo unsigned char
 	data = textureTerrainB.convertToData(bitmap, imageWidth,
-			imageHeight);
+		imageHeight);
 	// Creando la textura con id 1
 	glGenTextures(1, &textureTerrainBID);
 	// Enlazar esa textura a una tipo de textura de 2D.
@@ -649,10 +658,11 @@ void init(int width, int height, std::string strTitle, bool bFullScreen) {
 		// Formato interno de la libreria de la imagen, el tipo de dato y al apuntador
 		// a los datos
 		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, imageWidth, imageHeight, 0,
-		GL_BGRA, GL_UNSIGNED_BYTE, data);
+			GL_BGRA, GL_UNSIGNED_BYTE, data);
 		// Generan los niveles del mipmap (OpenGL es el ecargado de realizarlos)
 		glGenerateMipmap(GL_TEXTURE_2D);
-	} else
+	}
+	else
 		std::cout << "Failed to load texture" << std::endl;
 	// Libera la memoria de la textura
 	textureTerrainB.freeImage(bitmap);
@@ -663,7 +673,7 @@ void init(int width, int height, std::string strTitle, bool bFullScreen) {
 	bitmap = textureTerrainBlendMap.loadImage(true);
 	// Convertimos el mapa de bits en un arreglo unidimensional de tipo unsigned char
 	data = textureTerrainBlendMap.convertToData(bitmap, imageWidth,
-			imageHeight);
+		imageHeight);
 	// Creando la textura con id 1
 	glGenTextures(1, &textureTerrainBlendMapID);
 	// Enlazar esa textura a una tipo de textura de 2D.
@@ -681,10 +691,11 @@ void init(int width, int height, std::string strTitle, bool bFullScreen) {
 		// Formato interno de la libreria de la imagen, el tipo de dato y al apuntador
 		// a los datos
 		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, imageWidth, imageHeight, 0,
-		GL_BGRA, GL_UNSIGNED_BYTE, data);
+			GL_BGRA, GL_UNSIGNED_BYTE, data);
 		// Generan los niveles del mipmap (OpenGL es el ecargado de realizarlos)
 		glGenerateMipmap(GL_TEXTURE_2D);
-	} else
+	}
+	else
 		std::cout << "Failed to load texture" << std::endl;
 	// Libera la memoria de la textura
 	textureTerrainBlendMap.freeImage(bitmap);
@@ -766,7 +777,7 @@ void reshapeCallback(GLFWwindow *Window, int widthRes, int heightRes) {
 }
 
 void keyCallback(GLFWwindow *window, int key, int scancode, int action,
-		int mode) {
+	int mode) {
 	if (action == GLFW_PRESS) {
 		switch (key) {
 		case GLFW_KEY_ESCAPE:
@@ -783,7 +794,7 @@ void mouseCallback(GLFWwindow *window, double xpos, double ypos) {
 	lastMousePosY = ypos;
 }
 
-void scrollCallback(GLFWwindow* window, double xoffset, double yoffset){
+void scrollCallback(GLFWwindow* window, double xoffset, double yoffset) {
 	distanceFromTarget -= yoffset;
 	camera->setDistanceFromTarget(distanceFromTarget);
 }
@@ -810,34 +821,42 @@ bool processInput(bool continueApplication) {
 		return false;
 	}
 
-	if(glfwJoystickPresent(GLFW_JOYSTICK_1) == GLFW_TRUE) {
+	if (glfwJoystickPresent(GLFW_JOYSTICK_1) == GLFW_TRUE) {
 		std::cout << "Esta conectado el joystick" << std::endl;
 		const char * nombrejoy = glfwGetJoystickName(GLFW_JOYSTICK_1);
 		std::cout << nombrejoy << std::endl;
 		int axisCount = 0, buttonCount = 0;
 		const float * axes = glfwGetJoystickAxes(GLFW_JOYSTICK_1, &axisCount);
-		std::cout << "Existen " << axisCount<<" ejes contectados "<< std::endl;
+		std::cout << "Existen " << axisCount << " ejes contectados " << std::endl;
 		std::cout << "Axis LX " << axes[0] << std::endl;
 		std::cout << "Axis LY " << axes[1] << std::endl;
 		std::cout << "Axis RX " << axes[2] << std::endl;
-		std::cout << "Axis RY " << axes[3] << std::endl;
-		std::cout << "Axis LT " << axes[4] << std::endl;
-		std::cout << "Axis RT " << axes[5] << std::endl;
+		std::cout << "Axis L2 " << axes[3] << std::endl;
+		std::cout << "Axis R2 " << axes[4] << std::endl;
+		std::cout << "Axis RY " << axes[5] << std::endl;
+
 		if (fabs(axes[0]) >= 0.3f) {
-			modelMatrixMayow = glm::rotate(modelMatrixMayow,-axes[0] * 0.07f, glm::vec3(0, 1, 0));
+			modelMatrixMayow = glm::rotate(modelMatrixMayow, -axes[0] * 0.07f, glm::vec3(0, 1, 0));
 		}
 		if (fabs(axes[1]) >= 0.3f) {
-			modelMatrixMayow = glm::translate(modelMatrixMayow, glm::vec3(0, 0, axes[1] * 0.1f));
+			modelMatrixMayow = glm::translate(modelMatrixMayow, glm::vec3(0, 0, -axes[1] * 0.1f));
 			animationIndex = 0;
 		}
 		if (fabs(axes[2]) >= 0.3f) {
 			camera->mouseMoveCamera(axes[2], 0, deltaTime);
 		}
-		if (fabs(axes[3]) >= 0.3f) {
-			camera->mouseMoveCamera(0, axes[3], deltaTime);
+		if (fabs(axes[5]) >= 0.3f) {
+			camera->mouseMoveCamera(0, axes[5], deltaTime);
 		}
 		const unsigned char * buttons = glfwGetJoystickButtons(GLFW_JOYSTICK_1, &buttonCount);
-		if (buttons[0] == GLFW_PRESS && !isJump) {
+		//Buttons
+		std::cout << "Square " << buttons[0] << std::endl;
+		std::cout << "Cross" << buttons[1] << std::endl;
+		std::cout << "Circle" << buttons[2] << std::endl;
+		std::cout << "Triangle" << buttons[3] << std::endl;
+		std::cout << "L1" << buttons[4] << std::endl;
+		std::cout << "R1" << buttons[5] << std::endl;
+		if (buttons[1] == GLFW_PRESS && !isJump) {
 			tmv = 0;
 			startTimeJump = currTime;
 			isJump = true;
@@ -846,93 +865,93 @@ bool processInput(bool continueApplication) {
 	}
 
 
-	if(glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_LEFT) == GLFW_PRESS)
+	if (glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_LEFT) == GLFW_PRESS)
 		camera->mouseMoveCamera(offsetX, 0.0, deltaTime);
-	if(glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_RIGHT) == GLFW_PRESS)
+	if (glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_RIGHT) == GLFW_PRESS)
 		camera->mouseMoveCamera(0.0, offsetY, deltaTime);
 	offsetX = 0;
 	offsetY = 0;
 
 	// Seleccionar modelo
-	if (enableCountSelected && glfwGetKey(window, GLFW_KEY_TAB) == GLFW_PRESS){
+	if (enableCountSelected && glfwGetKey(window, GLFW_KEY_TAB) == GLFW_PRESS) {
 		enableCountSelected = false;
 		modelSelected++;
-		if(modelSelected > 2)
+		if (modelSelected > 2)
 			modelSelected = 0;
-		if(modelSelected == 1)
+		if (modelSelected == 1)
 			fileName = "../animaciones/animation_dart_joints.txt";
 		if (modelSelected == 2)
 			fileName = "../animaciones/animation_dart.txt";
 		std::cout << "modelSelected:" << modelSelected << std::endl;
 	}
-	else if(glfwGetKey(window, GLFW_KEY_TAB) == GLFW_RELEASE)
+	else if (glfwGetKey(window, GLFW_KEY_TAB) == GLFW_RELEASE)
 		enableCountSelected = true;
 
 	// Guardar key frames
-	if(glfwGetKey(window, GLFW_KEY_LEFT_SHIFT) == GLFW_PRESS
-			&& glfwGetKey(window, GLFW_KEY_R) == GLFW_PRESS){
+	if (glfwGetKey(window, GLFW_KEY_LEFT_SHIFT) == GLFW_PRESS
+		&& glfwGetKey(window, GLFW_KEY_R) == GLFW_PRESS) {
 		record = true;
-		if(myfile.is_open())
+		if (myfile.is_open())
 			myfile.close();
 		myfile.open(fileName);
 	}
-	if(glfwGetKey(window, GLFW_KEY_LEFT_SHIFT) == GLFW_RELEASE
-			&& glfwGetKey(window, GLFW_KEY_R) == GLFW_PRESS){
+	if (glfwGetKey(window, GLFW_KEY_LEFT_SHIFT) == GLFW_RELEASE
+		&& glfwGetKey(window, GLFW_KEY_R) == GLFW_PRESS) {
 		record = false;
 		myfile.close();
-		if(modelSelected == 1)
+		if (modelSelected == 1)
 			keyFramesDartJoints = getKeyRotFrames(fileName);
 		if (modelSelected == 2)
 			keyFramesDart = getKeyFrames(fileName);
 	}
-	if(availableSave && glfwGetKey(window, GLFW_KEY_ENTER) == GLFW_PRESS){
+	if (availableSave && glfwGetKey(window, GLFW_KEY_ENTER) == GLFW_PRESS) {
 		saveFrame = true;
 		availableSave = false;
-	}if(glfwGetKey(window, GLFW_KEY_ENTER) == GLFW_RELEASE)
+	}if (glfwGetKey(window, GLFW_KEY_ENTER) == GLFW_RELEASE)
 		availableSave = true;
 
 	// Dart Lego model movements
 	if (modelSelected == 1 && glfwGetKey(window, GLFW_KEY_LEFT_SHIFT) == GLFW_RELEASE &&
-			glfwGetKey(window, GLFW_KEY_1) == GLFW_PRESS)
+		glfwGetKey(window, GLFW_KEY_1) == GLFW_PRESS)
 		rotDartHead += 0.02;
 	else if (modelSelected == 1 && glfwGetKey(window, GLFW_KEY_LEFT_SHIFT) == GLFW_PRESS &&
-			glfwGetKey(window, GLFW_KEY_1) == GLFW_PRESS)
+		glfwGetKey(window, GLFW_KEY_1) == GLFW_PRESS)
 		rotDartHead -= 0.02;
 	if (modelSelected == 1 && glfwGetKey(window, GLFW_KEY_LEFT_SHIFT) == GLFW_RELEASE &&
-			glfwGetKey(window, GLFW_KEY_2) == GLFW_PRESS)
+		glfwGetKey(window, GLFW_KEY_2) == GLFW_PRESS)
 		rotDartLeftArm += 0.02;
 	else if (modelSelected == 1 && glfwGetKey(window, GLFW_KEY_LEFT_SHIFT) == GLFW_PRESS &&
-			glfwGetKey(window, GLFW_KEY_2) == GLFW_PRESS)
+		glfwGetKey(window, GLFW_KEY_2) == GLFW_PRESS)
 		rotDartLeftArm -= 0.02;
 	if (modelSelected == 1 && glfwGetKey(window, GLFW_KEY_LEFT_SHIFT) == GLFW_RELEASE &&
-			glfwGetKey(window, GLFW_KEY_3) == GLFW_PRESS)
+		glfwGetKey(window, GLFW_KEY_3) == GLFW_PRESS)
 		rotDartRightArm += 0.02;
 	else if (modelSelected == 1 && glfwGetKey(window, GLFW_KEY_LEFT_SHIFT) == GLFW_PRESS &&
-			glfwGetKey(window, GLFW_KEY_3) == GLFW_PRESS)
+		glfwGetKey(window, GLFW_KEY_3) == GLFW_PRESS)
 		rotDartRightArm -= 0.02;
 	if (modelSelected == 1 && glfwGetKey(window, GLFW_KEY_LEFT_SHIFT) == GLFW_RELEASE &&
-			glfwGetKey(window, GLFW_KEY_4) == GLFW_PRESS)
+		glfwGetKey(window, GLFW_KEY_4) == GLFW_PRESS)
 		rotDartLeftHand += 0.02;
 	else if (modelSelected == 1 && glfwGetKey(window, GLFW_KEY_LEFT_SHIFT) == GLFW_PRESS &&
-			glfwGetKey(window, GLFW_KEY_4) == GLFW_PRESS)
+		glfwGetKey(window, GLFW_KEY_4) == GLFW_PRESS)
 		rotDartLeftHand -= 0.02;
 	if (modelSelected == 1 && glfwGetKey(window, GLFW_KEY_LEFT_SHIFT) == GLFW_RELEASE &&
-			glfwGetKey(window, GLFW_KEY_5) == GLFW_PRESS)
+		glfwGetKey(window, GLFW_KEY_5) == GLFW_PRESS)
 		rotDartRightHand += 0.02;
 	else if (modelSelected == 1 && glfwGetKey(window, GLFW_KEY_LEFT_SHIFT) == GLFW_PRESS &&
-			glfwGetKey(window, GLFW_KEY_5) == GLFW_PRESS)
+		glfwGetKey(window, GLFW_KEY_5) == GLFW_PRESS)
 		rotDartRightHand -= 0.02;
 	if (modelSelected == 1 && glfwGetKey(window, GLFW_KEY_LEFT_SHIFT) == GLFW_RELEASE &&
-			glfwGetKey(window, GLFW_KEY_6) == GLFW_PRESS)
+		glfwGetKey(window, GLFW_KEY_6) == GLFW_PRESS)
 		rotDartLeftLeg += 0.02;
 	else if (modelSelected == 1 && glfwGetKey(window, GLFW_KEY_LEFT_SHIFT) == GLFW_PRESS &&
-			glfwGetKey(window, GLFW_KEY_6) == GLFW_PRESS)
+		glfwGetKey(window, GLFW_KEY_6) == GLFW_PRESS)
 		rotDartLeftLeg -= 0.02;
 	if (modelSelected == 1 && glfwGetKey(window, GLFW_KEY_LEFT_SHIFT) == GLFW_RELEASE &&
-			glfwGetKey(window, GLFW_KEY_7) == GLFW_PRESS)
+		glfwGetKey(window, GLFW_KEY_7) == GLFW_PRESS)
 		rotDartRightLeg += 0.02;
 	else if (modelSelected == 1 && glfwGetKey(window, GLFW_KEY_LEFT_SHIFT) == GLFW_PRESS &&
-			glfwGetKey(window, GLFW_KEY_7) == GLFW_PRESS)
+		glfwGetKey(window, GLFW_KEY_7) == GLFW_PRESS)
 		rotDartRightLeg -= 0.02;
 	if (modelSelected == 2 && glfwGetKey(window, GLFW_KEY_LEFT) == GLFW_PRESS)
 		modelMatrixDart = glm::rotate(modelMatrixDart, 0.02f, glm::vec3(0, 1, 0));
@@ -943,16 +962,18 @@ bool processInput(bool continueApplication) {
 	else if (modelSelected == 2 && glfwGetKey(window, GLFW_KEY_DOWN) == GLFW_PRESS)
 		modelMatrixDart = glm::translate(modelMatrixDart, glm::vec3(0.02, 0.0, 0.0));
 
-	if (modelSelected == 2 && glfwGetKey(window, GLFW_KEY_LEFT) == GLFW_PRESS){
+	if (modelSelected == 2 && glfwGetKey(window, GLFW_KEY_LEFT) == GLFW_PRESS) {
 		modelMatrixMayow = glm::rotate(modelMatrixMayow, glm::radians(1.0f), glm::vec3(0, 1, 0));
 		animationIndex = 0;
-	}else if (modelSelected == 2 && glfwGetKey(window, GLFW_KEY_RIGHT) == GLFW_PRESS){
+	}
+	else if (modelSelected == 2 && glfwGetKey(window, GLFW_KEY_RIGHT) == GLFW_PRESS) {
 		modelMatrixMayow = glm::rotate(modelMatrixMayow, glm::radians(-1.0f), glm::vec3(0, 1, 0));
 		animationIndex = 0;
-	}if (modelSelected == 2 && glfwGetKey(window, GLFW_KEY_UP) == GLFW_PRESS){
+	}if (modelSelected == 2 && glfwGetKey(window, GLFW_KEY_UP) == GLFW_PRESS) {
 		modelMatrixMayow = glm::translate(modelMatrixMayow, glm::vec3(0, 0, 0.02));
 		animationIndex = 0;
-	}else if (modelSelected == 2 && glfwGetKey(window, GLFW_KEY_DOWN) == GLFW_PRESS){
+	}
+	else if (modelSelected == 2 && glfwGetKey(window, GLFW_KEY_DOWN) == GLFW_PRESS) {
 		modelMatrixMayow = glm::translate(modelMatrixMayow, glm::vec3(0, 0, -0.02));
 		animationIndex = 0;
 	}
@@ -999,7 +1020,7 @@ void applicationLoop() {
 
 	while (psi) {
 		currTime = TimeManager::Instance().GetTime();
-		if(currTime - lastTime < 0.016666667){
+		if (currTime - lastTime < 0.016666667) {
 			glfwPollEvents();
 			continue;
 		}
@@ -1017,24 +1038,24 @@ void applicationLoop() {
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 		glm::mat4 projection = glm::perspective(glm::radians(45.0f),
-				(float) screenWidth / (float) screenHeight, 0.01f, 100.0f);
+			(float)screenWidth / (float)screenHeight, 0.01f, 100.0f);
 
-		if(modelSelected == 1){
+		if (modelSelected == 1) {
 			axis = glm::axis(glm::quat_cast(modelMatrixDart));
 			angleTarget = glm::angle(glm::quat_cast(modelMatrixDart));
 			target = modelMatrixDart[3];
 		}
-		else{
+		else {
 			axis = glm::axis(glm::quat_cast(modelMatrixMayow));
 			angleTarget = glm::angle(glm::quat_cast(modelMatrixMayow));
 			target = modelMatrixMayow[3];
 		}
 
-		if(std::isnan(angleTarget))
+		if (std::isnan(angleTarget))
 			angleTarget = 0.0;
-		if(axis.y < 0)
+		if (axis.y < 0)
 			angleTarget = -angleTarget;
-		if(modelSelected == 1)
+		if (modelSelected == 1)
 			angleTarget -= glm::radians(90.0f);
 		camera->setCameraTarget(target);
 		camera->setAngleTarget(angleTarget);
@@ -1047,19 +1068,19 @@ void applicationLoop() {
 
 		// Settea la matriz de vista y projection al shader con skybox
 		shaderSkybox.setMatrix4("projection", 1, false,
-				glm::value_ptr(projection));
+			glm::value_ptr(projection));
 		shaderSkybox.setMatrix4("view", 1, false,
-				glm::value_ptr(glm::mat4(glm::mat3(view))));
+			glm::value_ptr(glm::mat4(glm::mat3(view))));
 		// Settea la matriz de vista y projection al shader con multiples luces
 		shaderMulLighting.setMatrix4("projection", 1, false,
-					glm::value_ptr(projection));
+			glm::value_ptr(projection));
 		shaderMulLighting.setMatrix4("view", 1, false,
-				glm::value_ptr(view));
+			glm::value_ptr(view));
 		// Settea la matriz de vista y projection al shader con multiples luces
 		shaderTerrain.setMatrix4("projection", 1, false,
-					glm::value_ptr(projection));
+			glm::value_ptr(projection));
 		shaderTerrain.setMatrix4("view", 1, false,
-				glm::value_ptr(view));
+			glm::value_ptr(view));
 
 		/*******************************************
 		 * Propiedades Luz direccional
@@ -1111,7 +1132,7 @@ void applicationLoop() {
 		 *******************************************/
 		shaderMulLighting.setInt("pointLightCount", lamp1Position.size() + lamp2Orientation.size());
 		shaderTerrain.setInt("pointLightCount", lamp1Position.size() + lamp2Orientation.size());
-		for (int i = 0; i < lamp1Position.size(); i++){
+		for (int i = 0; i < lamp1Position.size(); i++) {
 			glm::mat4 matrixAdjustLamp = glm::mat4(1.0f);
 			matrixAdjustLamp = glm::translate(matrixAdjustLamp, lamp1Position[i]);
 			matrixAdjustLamp = glm::rotate(matrixAdjustLamp, glm::radians(lamp1Orientation[i]), glm::vec3(0, 1, 0));
@@ -1133,7 +1154,7 @@ void applicationLoop() {
 			shaderTerrain.setFloat("pointLights[" + std::to_string(i) + "].linear", 0.09);
 			shaderTerrain.setFloat("pointLights[" + std::to_string(i) + "].quadratic", 0.02);
 		}
-		for (int i = 0; i < lamp2Position.size(); i++){
+		for (int i = 0; i < lamp2Position.size(); i++) {
 			glm::mat4 matrixAdjustLamp = glm::mat4(1.0f);
 			matrixAdjustLamp = glm::translate(matrixAdjustLamp, lamp2Position[i]);
 			matrixAdjustLamp = glm::rotate(matrixAdjustLamp, glm::radians(lamp2Orientation[i]), glm::vec3(0, 1, 0));
@@ -1190,7 +1211,7 @@ void applicationLoop() {
 		/*******************************************
 		 * Custom objects obj
 		 *******************************************/
-		//Rock render
+		 //Rock render
 		matrixModelRock[3][1] = terrain.getHeightTerrain(matrixModelRock[3][0], matrixModelRock[3][2]);
 		modelRock.render(matrixModelRock);
 		// Forze to enable the unit texture to 0 always ----------------- IMPORTANT
@@ -1231,7 +1252,7 @@ void applicationLoop() {
 		glEnable(GL_CULL_FACE);
 
 		// Render the lamps
-		for (int i = 0; i < lamp1Position.size(); i++){
+		for (int i = 0; i < lamp1Position.size(); i++) {
 			lamp1Position[i].y = terrain.getHeightTerrain(lamp1Position[i].x, lamp1Position[i].z);
 			modelLamp1.setPosition(lamp1Position[i]);
 			modelLamp1.setScale(glm::vec3(0.5, 0.5, 0.5));
@@ -1239,7 +1260,7 @@ void applicationLoop() {
 			modelLamp1.render();
 		}
 
-		for (int i = 0; i < lamp2Position.size(); i++){
+		for (int i = 0; i < lamp2Position.size(); i++) {
 			lamp2Position[i].y = terrain.getHeightTerrain(lamp2Position[i].x, lamp2Position[i].z);
 			modelLamp2.setPosition(lamp2Position[i]);
 			modelLamp2.setScale(glm::vec3(1.0, 1.0, 1.0));
@@ -1306,12 +1327,12 @@ void applicationLoop() {
 		/*******************************************
 		 * Custom Anim objects obj
 		 *******************************************/
-		///////////// PRACTICA 7
+		 ///////////// PRACTICA 7
 		modelMatrixMayow[3][1] = -gravity * tmv * tmv + 3.0 * tmv + terrain.getHeightTerrain(modelMatrixMayow[3][0], modelMatrixMayow[3][2]);
 		tmv = currTime - startTimeJump;
 		if (modelMatrixMayow[3][1] < terrain.getHeightTerrain(modelMatrixMayow[3][0], modelMatrixMayow[3][2])) {
 			isJump = false;
-			modelMatrixMayow[3][1] =  terrain.getHeightTerrain(modelMatrixMayow[3][0], modelMatrixMayow[3][2]);
+			modelMatrixMayow[3][1] = terrain.getHeightTerrain(modelMatrixMayow[3][0], modelMatrixMayow[3][2]);
 		}
 		glm::mat4 modelMatrixMayowBody = glm::mat4(modelMatrixMayow);
 		modelMatrixMayowBody = glm::scale(modelMatrixMayowBody, glm::vec3(0.021, 0.021, 0.021));
@@ -1338,16 +1359,16 @@ void applicationLoop() {
 		 * Creacion de colliders
 		 * IMPORTANT do this before interpolations
 		 *******************************************/
-		// Collider del dart vader lego
+		 // Collider del dart vader lego
 		glm::mat4 modelmatrixColliderDart = glm::mat4(modelMatrixDart);
 		AbstractModel::OBB dartLegoBodyCollider;
 		// Set the orientation of collider before doing the scale
 		dartLegoBodyCollider.u = glm::quat_cast(modelMatrixDart);
 		modelmatrixColliderDart = glm::scale(modelmatrixColliderDart, glm::vec3(0.5, 0.5, 0.5));
 		modelmatrixColliderDart = glm::translate(modelmatrixColliderDart,
-				glm::vec3(modelDartLegoBody.getObb().c.x,
-						modelDartLegoBody.getObb().c.y,
-						modelDartLegoBody.getObb().c.z));
+			glm::vec3(modelDartLegoBody.getObb().c.x,
+				modelDartLegoBody.getObb().c.y,
+				modelDartLegoBody.getObb().c.z));
 		dartLegoBodyCollider.c = glm::vec3(modelmatrixColliderDart[3]);
 		dartLegoBodyCollider.e = modelDartLegoBody.getObb().e * glm::vec3(0.5, 0.5, 0.5);
 		addOrUpdateColliders(collidersOBB, "dart", dartLegoBodyCollider, modelMatrixDart);
@@ -1358,20 +1379,20 @@ void applicationLoop() {
 		// Set the orientation of collider before doing the scale
 		aircraftCollider.u = glm::quat_cast(modelMatrixAircraft);
 		modelMatrixColliderAircraft = glm::scale(modelMatrixColliderAircraft,
-				glm::vec3(1.0, 1.0, 1.0));
+			glm::vec3(1.0, 1.0, 1.0));
 		modelMatrixColliderAircraft = glm::translate(
-				modelMatrixColliderAircraft, modelAircraft.getObb().c);
+			modelMatrixColliderAircraft, modelAircraft.getObb().c);
 		aircraftCollider.c = glm::vec3(modelMatrixColliderAircraft[3]);
 		aircraftCollider.e = modelAircraft.getObb().e * glm::vec3(1.0, 1.0, 1.0);
 		addOrUpdateColliders(collidersOBB, "aircraft", aircraftCollider, modelMatrixAircraft);
 
 		// Lamps1 colliders
-		for (int i = 0; i < lamp1Position.size(); i++){
+		for (int i = 0; i < lamp1Position.size(); i++) {
 			AbstractModel::OBB lampCollider;
 			glm::mat4 modelMatrixColliderLamp = glm::mat4(1.0);
 			modelMatrixColliderLamp = glm::translate(modelMatrixColliderLamp, lamp1Position[i]);
 			modelMatrixColliderLamp = glm::rotate(modelMatrixColliderLamp, glm::radians(lamp1Orientation[i]),
-					glm::vec3(0, 1, 0));
+				glm::vec3(0, 1, 0));
 			// Set the orientation of collider before doing the scale
 			lampCollider.u = glm::quat_cast(modelMatrixColliderLamp);
 			modelMatrixColliderLamp = glm::scale(modelMatrixColliderLamp, glm::vec3(0.5, 0.5, 0.5));
@@ -1430,7 +1451,7 @@ void applicationLoop() {
 		 * Render de colliders
 		 *******************************************/
 		for (std::map<std::string, std::tuple<AbstractModel::OBB, glm::mat4, glm::mat4> >::iterator it =
-				collidersOBB.begin(); it != collidersOBB.end(); it++) {
+			collidersOBB.begin(); it != collidersOBB.end(); it++) {
 			glm::mat4 matrixCollider = glm::mat4(1.0);
 			matrixCollider = glm::translate(matrixCollider, std::get<0>(it->second).c);
 			matrixCollider = matrixCollider * glm::mat4(std::get<0>(it->second).u);
@@ -1441,7 +1462,7 @@ void applicationLoop() {
 		}
 
 		for (std::map<std::string, std::tuple<AbstractModel::SBB, glm::mat4, glm::mat4> >::iterator it =
-				collidersSBB.begin(); it != collidersSBB.end(); it++) {
+			collidersSBB.begin(); it != collidersSBB.end(); it++) {
 			glm::mat4 matrixCollider = glm::mat4(1.0);
 			matrixCollider = glm::translate(matrixCollider, std::get<0>(it->second).c);
 			matrixCollider = glm::scale(matrixCollider, glm::vec3(std::get<0>(it->second).ratio * 2.0f));
@@ -1558,7 +1579,7 @@ void applicationLoop() {
 		/*******************************************
 		 * Interpolation key frames with disconect objects
 		 *******************************************/
-		if(record && modelSelected == 1){
+		if (record && modelSelected == 1) {
 			matrixDartJoints.push_back(rotDartHead);
 			matrixDartJoints.push_back(rotDartLeftArm);
 			matrixDartJoints.push_back(rotDartLeftHand);
@@ -1571,9 +1592,9 @@ void applicationLoop() {
 				saveFrame = false;
 			}
 		}
-		else if(keyFramesDartJoints.size() > 0){
+		else if (keyFramesDartJoints.size() > 0) {
 			// Para reproducir el frame
-			interpolationDartJoints = numPasosDartJoints / (float) maxNumPasosDartJoints;
+			interpolationDartJoints = numPasosDartJoints / (float)maxNumPasosDartJoints;
 			numPasosDartJoints++;
 			if (interpolationDartJoints > 1.0) {
 				numPasosDartJoints = 0;
@@ -1622,16 +1643,16 @@ void applicationLoop() {
 		 * State machines
 		 *******************************************/
 
-		// State machine for the lambo car
-		switch(stateDoor){
+		 // State machine for the lambo car
+		switch (stateDoor) {
 		case 0:
 			dorRotCount += 0.5;
-			if(dorRotCount > 75)
+			if (dorRotCount > 75)
 				stateDoor = 1;
 			break;
 		case 1:
 			dorRotCount -= 0.5;
-			if(dorRotCount < 0){
+			if (dorRotCount < 0) {
 				dorRotCount = 0.0;
 				stateDoor = 0;
 			}
