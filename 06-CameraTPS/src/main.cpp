@@ -44,7 +44,7 @@
 int screenWidth;
 int screenHeight;
 
-GLFWwindow* window;
+GLFWwindow *window;
 
 Shader shader;
 //Shader con skybox
@@ -179,11 +179,11 @@ double deltaTime;
 double currTime, lastTime;
 
 // Se definen todos las funciones.
-void reshapeCallback(GLFWwindow* Window, int widthRes, int heightRes);
-void keyCallback(GLFWwindow* window, int key, int scancode, int action,
+void reshapeCallback(GLFWwindow *Window, int widthRes, int heightRes);
+void keyCallback(GLFWwindow *window, int key, int scancode, int action,
 	int mode);
-void mouseCallback(GLFWwindow* window, double xpos, double ypos);
-void mouseButtonCallback(GLFWwindow* window, int button, int state, int mod);
+void mouseCallback(GLFWwindow *window, double xpos, double ypos);
+void mouseButtonCallback(GLFWwindow *window, int button, int state, int mod);
 void scrollCallback(GLFWwindow* window, double xoffset, double yoffset);
 void init(int width, int height, std::string strTitle, bool bFullScreen);
 void destroy();
@@ -326,8 +326,8 @@ void init(int width, int height, std::string strTitle, bool bFullScreen) {
 
 	// Definimos el tamanio de la imagen
 	int imageWidth, imageHeight;
-	FIBITMAP* bitmap;
-	unsigned char* data;
+	FIBITMAP *bitmap;
+	unsigned char *data;
 
 	// Carga de texturas para el skybox
 	Texture skyboxTexture = Texture("");
@@ -342,8 +342,8 @@ void init(int width, int height, std::string strTitle, bool bFullScreen) {
 
 	for (int i = 0; i < ARRAY_SIZE_IN_ELEMENTS(types); i++) {
 		skyboxTexture = Texture(fileNames[i]);
-		FIBITMAP* bitmap = skyboxTexture.loadImage(true);
-		unsigned char* data = skyboxTexture.convertToData(bitmap, imageWidth,
+		FIBITMAP *bitmap = skyboxTexture.loadImage(true);
+		unsigned char *data = skyboxTexture.convertToData(bitmap, imageWidth,
 			imageHeight);
 		if (data) {
 			glTexImage2D(types[i], 0, GL_RGBA, imageWidth, imageHeight, 0,
@@ -759,13 +759,13 @@ void scrollCallback(GLFWwindow* window, double xoffset, double yoffset) {
 
 }
 
-void reshapeCallback(GLFWwindow* Window, int widthRes, int heightRes) {
+void reshapeCallback(GLFWwindow *Window, int widthRes, int heightRes) {
 	screenWidth = widthRes;
 	screenHeight = heightRes;
 	glViewport(0, 0, widthRes, heightRes);
 }
 
-void keyCallback(GLFWwindow* window, int key, int scancode, int action,
+void keyCallback(GLFWwindow *window, int key, int scancode, int action,
 	int mode) {
 	if (action == GLFW_PRESS) {
 		switch (key) {
@@ -776,14 +776,14 @@ void keyCallback(GLFWwindow* window, int key, int scancode, int action,
 	}
 }
 
-void mouseCallback(GLFWwindow* window, double xpos, double ypos) {
+void mouseCallback(GLFWwindow *window, double xpos, double ypos) {
 	offsetX = xpos - lastMousePosX;
 	offsetY = ypos - lastMousePosY;
 	lastMousePosX = xpos;
 	lastMousePosY = ypos;
 }
 
-void mouseButtonCallback(GLFWwindow* window, int button, int state, int mod) {
+void mouseButtonCallback(GLFWwindow *window, int button, int state, int mod) {
 	if (state == GLFW_PRESS) {
 		switch (button) {
 		case GLFW_MOUSE_BUTTON_RIGHT:
@@ -1410,7 +1410,7 @@ void applicationLoop() {
 	}
 }
 
-int main(int argc, char** argv) {
+int main(int argc, char **argv) {
 	init(800, 700, "Window GLFW", false);
 	applicationLoop();
 	destroy();
